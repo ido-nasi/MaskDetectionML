@@ -21,10 +21,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class CustomDataSet(Dataset):
     def __init__(self, main_dir):
         self.main_dir = main_dir
-        self.transform = T.Compose([T.ToTensor(),
-                                    T.Resize(128),
+        self.transform = T.Compose([T.Resize(128),
                                     T.CenterCrop(64),
-                                    ])
+                                    T.ToTensor(), 
+                                   ])
         self.total_images = os.listdir(main_dir)
 
     def __len__(self):
