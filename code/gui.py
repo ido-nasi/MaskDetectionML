@@ -30,7 +30,7 @@ def predict():
 
         outputs = model(images)
 
-        print(outputs)
+        # print(outputs)
         outputs = torch.round(outputs)
 
         outputs = outputs.cpu().detach().numpy()
