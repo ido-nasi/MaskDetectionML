@@ -7,9 +7,6 @@ from ResNet18 import ResNet18
 from main import calculate_stats, CustomDataSet, train
 
 
-def identity(image):
-    return image
-
 
 def main():
     torch.backends.cudnn.benchmark = True
@@ -17,12 +14,12 @@ def main():
     batch_size = 64
     num_epochs = 100
 
-    train_dataset = CustomDataSet(main_dir='train')
+    train_dataset = CustomDataSet(main_dir='../train')
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                                                num_workers=8, persistent_workers=True, pin_memory=False, drop_last=True)
     train_F1, train_precision, train_accuracy, train_specificity = train(num_epochs, train_loader, train_dataset)
     F1, precision, accuracy, specificity = [], [], [], []
-    test_dataset = CustomDataSet("test")
+    test_dataset = CustomDataSet("../test")
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=True,
                                               num_workers=8, persistent_workers=True, pin_memory=False, drop_last=True)
 
