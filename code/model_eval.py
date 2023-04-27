@@ -7,7 +7,6 @@ from ResNet18 import ResNet18
 from main import calculate_stats, CustomDataSet, train
 
 
-
 def main():
     torch.backends.cudnn.benchmark = True
 
