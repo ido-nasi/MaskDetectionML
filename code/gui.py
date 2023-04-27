@@ -61,10 +61,20 @@ def show_result(p: float):
     img = Image.open(IMAGE_PATH)
     d1 = ImageDraw.Draw(img)
     font_path = os.path.join(cv2.__path__[0], 'qt', 'fonts', 'DejaVuSans.ttf')
-    font = ImageFont.truetype(font_path, size=48)
-    d1.text((10, 10),
+    font = ImageFont.truetype(font_path, size=36)
+
+    text_size = d1.textsize("Without Mask" if p == 0.0 else "With Mask", font=font)
+    x = y = 10
+    padding = 10
+
+    d1.rectangle((x - padding, y - padding,
+                  x + text_size[0] + padding,
+                  y + text_size[1] + padding),
+                 fill=(0, 0, 0))
+
+    d1.text((x, y),
             "Without Mask" if p == 0.0 else "With Mask",
-            fill=(255, 0, 0),
+            fill=(255, 255, 255),
             font=font)
     img.show()
 
@@ -73,3 +83,4 @@ if __name__ == '__main__':
     capture_frame()
     prediction = predict()
     show_result(prediction)
+    os.remove(IMAGE_PATH)

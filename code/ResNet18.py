@@ -6,14 +6,15 @@ import torchvision.transforms as T
 class Block(nn.Module):
     def __init__(self, in_channels, out_channels, stride=1):
         """
+        :param in_channels: number of channels of the current data
         :param out_channels: number of channels outputted by convolutions in current block
-        :param downsampling: downsampling method used in the network architecture
+        :param down sampling: down sampling method used in the network architecture
         :param stride: stride of kernels application
         """
         super(Block, self).__init__()
         if stride > 1:
-            self.downsampling = nn.Sequential(nn.Conv2d(in_channels, out_channels, kernel_size=1,
-                                                        stride=stride), nn.BatchNorm2d(out_channels))
+            self.downsampling = nn.Sequential(nn.Conv2d(in_channels, out_channels, kernel_size=1, stride=stride),
+                                              nn.BatchNorm2d(out_channels))
         else:
             self.downsampling = None
         self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=3, stride=stride,
@@ -40,7 +41,6 @@ class Block(nn.Module):
 class ResNet18(nn.Module):
     def __init__(self):
         super(ResNet18, self).__init__()
-        self.num_residual_blocks = 2
         self.augment = torch.nn.Sequential(
             T.RandomPerspective(distortion_scale=0.2, p=0.7),
             T.RandomHorizontalFlip(p=0.3),
@@ -83,10 +83,11 @@ class ResNet18(nn.Module):
 
 class ResNetLayer(nn.Module):
     """
-        :param num_residual_blocks: number of blocks in current ResNet layer
-        :param intermediate_channels: number of out_channels in each block
+        :param in_channels: number of in_channels of previous block
+        :param out_channels: number of out_channels in each block
         :param stride: stride of kernels
-        :return: ResNet layer consisting of the specified number of blocks and skip connections as coded in Block class
+        :return: ResNet layer consisting of the specified number of blocks
+                and skip connections as coded in Block class
         """
 
     def __init__(self, in_channels, out_channels, stride):
@@ -97,3 +98,5 @@ class ResNetLayer(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
+
+

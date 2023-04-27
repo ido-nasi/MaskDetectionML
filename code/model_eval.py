@@ -13,7 +13,7 @@ def main():
     batch_size = 64
     num_epochs = 100
 
-    train_dataset = CustomDataSet(main_dir='../train')
+    train_dataset = CustomDataSet("../train")
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
                                                num_workers=8, persistent_workers=True, pin_memory=False, drop_last=True)
     train_F1, train_precision, train_accuracy, train_specificity = train(num_epochs, train_loader, train_dataset)
@@ -55,7 +55,6 @@ def main():
         precision.append(epoch_precision.cpu())
         accuracy.append(epoch_accuracy.cpu())
         specificity.append(epoch_specificity.cpu())
-    # outputs = outputs.detach().cpu()
 
     # Plot Test Results
     plt.plot(xs, F1, label="F1")

@@ -23,8 +23,8 @@ class CustomDataSet(Dataset):
         self.main_dir = main_dir
         self.transform = T.Compose([T.Resize(128),
                                     T.CenterCrop(64),
-                                    T.ToTensor(), 
-                                   ])
+                                    T.ToTensor(),
+                                    ])
         self.total_images = os.listdir(main_dir)
 
     def __len__(self):
@@ -52,13 +52,17 @@ def train(num_epochs, train_loader, train_dataset):
                 images = images.to(device)
                 labels = labels.to(device)
 
-            # Forward + Backward + Optimize
+            # Forward
             outputs = model(images).to(device)
             labels = labels.type(torch.FloatTensor).to(device)
             pred = torch.round(outputs)
+
+            # Backward
             loss = criterion(outputs, labels)
             optimizer.zero_grad()
             loss.backward()
+
+            # Optimizer
             torch.nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
             optimizer.step()
 
@@ -70,15 +74,15 @@ def train(num_epochs, train_loader, train_dataset):
 
             t.set_postfix_str(f'Epoch: {epoch + 1}/{num_epochs} Loss: {loss.data:.4f}')
 
+        # save metrics
         F1.append(epoch_F1.cpu())
         precision.append(epoch_precision.cpu())
         accuracy.append(epoch_accuracy.cpu())
         specificity.append(epoch_specificity.cpu())
+
+        # save model version {epoch}
         with open(f'trained_models/model_epoch{epoch}.pkl', 'w'):
             torch.save(model.state_dict(), f'trained_models//model_epoch{epoch}.pkl')
-        # if epoch % 3 == 0:
-        #     learning_rate = 0.8 * learning_rate
-        # print(time() - tic)
     return F1, precision, accuracy, specificity
 
 
@@ -99,10 +103,12 @@ def calculate_stats(outputs, true_values):
 if __name__ == '__main__':
     model = ResNet18().to(device)
     criterion = nn.BCELoss().to(device)
-    batch_size = 64
     num_epochs = 100
 
+    batch_size = 64
     train_dataset = CustomDataSet(main_dir='../train')
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True,
-                                               num_workers=8, persistent_workers=True, pin_memory=False, drop_last=True)
+    train_loader = torch.utils.data.DataLoader(train_dataset,
+                                               batch_size=batch_size, shuffle=True,
+                                               num_workers=8, persistent_workers=True,
+                                               pin_memory=False, drop_last=True)
     train(num_epochs, train_loader, train_dataset)

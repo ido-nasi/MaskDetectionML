@@ -15,7 +15,7 @@ model = ResNet18().to(device)
 model.load_state_dict(torch.load("final_model.pkl", map_location=torch.device('cpu')))
 
 # Create csv file or truncate existing one
-with open("prediction.csv", "w") as f:
+with torch.no_grad():
     model.eval()
 
     # write each pair of image id and output to csv
@@ -34,5 +34,6 @@ with open("prediction.csv", "w") as f:
         correct += (outputs == names).sum().item()
         count_all += len(names)
 
-    print(f"Accuracy: {correct / count_all}")
+        print(f"\rbatch {i+1}/{len(test_loader)}", end="", flush=True)
+    print(f"\n\nAccuracy: {correct / count_all:.4f}")
 
