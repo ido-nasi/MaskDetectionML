@@ -88,8 +88,8 @@ def train(num_epochs, train_loader, train_dataset):
 
 def calculate_stats(outputs, true_values):
     TP = torch.sum((outputs == true_values) & (true_values == 1))
-    FP = torch.sum((outputs != true_values) & (true_values == 1))
-    FN = torch.sum((outputs != true_values) & (true_values == 0))
+    FP = torch.sum((outputs != true_values) & (true_values == 0))
+    FN = torch.sum((outputs != true_values) & (true_values == 1))
     TN = torch.sum((outputs == true_values) & (true_values == 0))
     recall = TP / (TP + FN)
     precision = TP / (TP + FP)
