@@ -41,7 +41,7 @@ class CustomDataSet(Dataset):
 # Training the network
 def train(num_epochs, train_loader, train_dataset):
     F1, precision, accuracy, specificity = [], [], [], []
-    learning_rate = 0.00005
+    learning_rate = 0.0005  # 5e-4
     for epoch in range(num_epochs):
         epoch_F1, epoch_precision, epoch_accuracy, epoch_specificity, = 0, 0, 0, 0
         optimizer = torch.optim.AdamW(model.parameters(), learning_rate)
