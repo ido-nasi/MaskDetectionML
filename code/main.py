@@ -25,7 +25,7 @@ class CustomDataSet(Dataset):
                                     T.CenterCrop(64),
                                     T.ToTensor(),
                                     ])
-        self.total_images = [file for file in os.listdir(main_dir) if not file.startswith(".")]
+        self.total_images = os.listdir(main_dir)
 
     def __len__(self):
         return len(self.total_images)
