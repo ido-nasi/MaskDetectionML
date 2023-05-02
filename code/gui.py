@@ -10,7 +10,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 IMAGE_PATH = "../predictions/predict_10.jpg"
 INPUT_FOLDER = "../predictions"
-batch_size = 64
+batch_size = 1
 
 
 def predict():
