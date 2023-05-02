@@ -23,18 +23,13 @@ def predict():
     model.eval()
 
     for _, (images, names) in enumerate(test_loader):
-        if not torch.cuda.is_available():
-            images = images.cpu()
-        else:
-            images = images.cude()
+        images = images.to(device)
 
         outputs = model(images)
-
-        print(outputs)
         outputs = torch.round(outputs)
 
         outputs = outputs.cpu().detach().numpy()
-        # names = names.cpu().detach().numpy()
+
         return outputs[0]
 
 
