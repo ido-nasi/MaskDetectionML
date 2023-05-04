@@ -35,7 +35,7 @@ def main():
 
     for epoch in tqdm(num_epochs):
         epoch_F1, epoch_precision, epoch_accuracy, epoch_specificity = 0, 0, 0, 0
-        model = ResNet18().cuda()
+        model = ResNet18().to(device)
         model.load_state_dict(torch.load(f'trained_models/model_epoch{epoch}.pkl'), map_location=torch.device('cpu'))
         model.eval()
 
