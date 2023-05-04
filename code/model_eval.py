@@ -6,6 +6,7 @@ from tqdm import tqdm
 from ResNet18 import ResNet18
 from main import calculate_stats, CustomDataSet, train
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 def main():
     torch.backends.cudnn.benchmark = True
@@ -40,8 +41,8 @@ def main():
 
         for (images, labels) in test_loader:
             size = len(test_loader)
-            images = images.cuda()
-            labels = labels.cuda()
+            images = images.to(device)
+            labels = labels.to(device)
             outputs = model(images)
             rounded = torch.round(outputs)
             if torch.cuda.is_available():
