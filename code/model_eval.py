@@ -41,12 +41,13 @@ def main():
 
         for (images, labels) in test_loader:
             size = len(test_loader)
+            
             images = images.to(device)
             labels = labels.to(device)
+            
             outputs = model(images)
             rounded = torch.round(outputs)
-            if torch.cuda.is_available():
-                model = model.cuda()
+            
             batch_F1, batch_precision, batch_accuracy, batch_specificity = calculate_stats(rounded, labels)
             epoch_F1 += (batch_F1 / size)
             epoch_precision += batch_precision / size
