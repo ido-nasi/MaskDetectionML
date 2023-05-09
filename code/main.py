@@ -15,8 +15,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 img_folder_train_path = "../train"
 img_folder_test_path = "../test"
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 
 class CustomDataSet(Dataset):
     def __init__(self, main_dir):
