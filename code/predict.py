@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data import Dataset
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -71,8 +71,7 @@ def main():
         print(f"\n\nAccuracy: {correct / count_all:.4f}")
 
     plot_confusion_matrix(true_labels, predicted_labels, classnames)
-    print(classification_report(true_labels, predicted_labels, target_names=classnames))
-
+    
 
 if __name__ == '__main__':
     main()
