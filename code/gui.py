@@ -55,7 +55,7 @@ def capture_frame():
 def show_result(p: float):
     img = Image.open(IMAGE_PATH)
     d1 = ImageDraw.Draw(img)
-    font_path = os.path.join(cv2.__path__[0], 'qt', 'fonts', 'DejaVuSans.ttf')
+    font_path = 'DejaVuSans.ttf'
     font = ImageFont.truetype(font_path, size=36)
 
     text_size = d1.textsize("Without Mask" if p == 0.0 else "With Mask", font=font)
