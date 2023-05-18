@@ -46,7 +46,8 @@ def capture_frame():
                 cv2.imwrite(IMAGE_PATH, frame)
                 break
     else:
-        print("\033[931[!] Cannot connect to your camera")
+        print("\033[931[[!] Cannot connect to your camera")
+        exit(1)
 
     vid.release()
     cv2.destroyAllWindows()
